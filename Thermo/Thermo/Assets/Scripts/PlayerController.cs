@@ -23,8 +23,15 @@ public class PlayerController : MonoBehaviour {
 
     private bool solido = true;
 
+    public ParticleSystem footsteps;
+    private ParticleSystem.EmissionModule footEmission;
+
+    public ParticleSystem impactEffect;
+    private bool wasOnGround;
+
     void Start(){
         rb = GetComponent<Rigidbody2D>();
+        footEmission = footsteps.emission;
     }
 
     void FixedUpdate(){
@@ -77,6 +84,27 @@ public class PlayerController : MonoBehaviour {
         }
 
         }
+
+        //show footstep effect
+        if(Input.GetAxisRaw("Horizontal")!=0 && isGrounded)
+        {
+            footEmission.rateOverTime = 35f;
+        }else
+        {
+            footEmission.rateOverTime = 0f;
+        }
+
+        //show impact effect
+        if(!wasOnGround && isGrounded)
+        {
+            impactEffect.gameObject.SetActive(true);
+            impactEffect.Stop();
+            impactEffect.transform.position = footsteps.transform.position;
+            impactEffect.Play();
+        }
+        wasOnGround = isGrounded;
+
+
     }
 
 }
