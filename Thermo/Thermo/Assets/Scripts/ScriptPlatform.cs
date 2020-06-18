@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMove : MonoBehaviour
+public class ScriptPlatform : MonoBehaviour
 {
     Rigidbody2D enemyRigidBody2D;
     public int UnitsToMoveY = 5;
