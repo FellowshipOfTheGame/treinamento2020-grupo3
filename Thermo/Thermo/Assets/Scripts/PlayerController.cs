@@ -62,13 +62,13 @@ public class PlayerController : MonoBehaviour {
 
         if(solido==true){
 
-        if(isGrounded == true && Input.GetKeyDown(KeyCode.UpArrow)){
+        if(isGrounded == true && Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown("w")){
             isJumping = true;
             jumpTimeCounter = jumpTime;
             rb.velocity = Vector2.up * jumpForce;
         }
 
-        if(Input.GetKey(KeyCode.UpArrow) && isJumping == true){
+        if(Input.GetKey(KeyCode.UpArrow) || Input.GetKey("w") && isJumping == true){
 
             if(jumpTimeCounter >0){
                 rb.velocity = Vector2.up * jumpForce;
@@ -79,7 +79,8 @@ public class PlayerController : MonoBehaviour {
             }
         }
 
-        if(Input.GetKeyUp(KeyCode.UpArrow)){
+        if(Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp("w"))
+            {
             isJumping = false;
         }
 
