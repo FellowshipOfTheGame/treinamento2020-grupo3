@@ -7,11 +7,12 @@ public class PlayerController : MonoBehaviour {
     
 
     private Rigidbody2D rb;
+    public Animator an;
     public float speed;
     public float jumpForce;
     private float moveInput;
-     
 
+    private bool solido;
     private bool isGrounded;
     public Transform feetPos;
     public float checkRadius;
@@ -21,7 +22,7 @@ public class PlayerController : MonoBehaviour {
     public float jumpTime;
     private bool isJumping;
 
-    private bool solido = true;
+
 
     public ParticleSystem footsteps;
     private ParticleSystem.EmissionModule footEmission;
@@ -29,7 +30,9 @@ public class PlayerController : MonoBehaviour {
     public ParticleSystem impactEffect;
     private bool wasOnGround;
 
-    void Start(){
+    void Start()
+    {
+        solido = true;
         rb = GetComponent<Rigidbody2D>();
         footEmission = footsteps.emission;
     }
@@ -49,9 +52,8 @@ public class PlayerController : MonoBehaviour {
         else if(moveInput < 0){
             transform.eulerAngles = new Vector3(0, 180, 0);
         }
-        
-        if(Input.GetKey("x")||Input.GetKey("c")){
-            
+
+        if (Input.GetKey("x")||Input.GetKey("c")){
             solido = false;            
         }
 
@@ -63,9 +65,10 @@ public class PlayerController : MonoBehaviour {
         if(solido==true){
 
         if(isGrounded == true && Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown("w")){
-            isJumping = true;
-            jumpTimeCounter = jumpTime;
-            rb.velocity = Vector2.up * jumpForce;
+                isJumping = true;
+                jumpTimeCounter = jumpTime;
+                rb.velocity = Vector2.up * jumpForce;
+                an.SetBool("isJumping", true);
         }
 
         if(Input.GetKey(KeyCode.UpArrow) || Input.GetKey("w") && isJumping == true){
@@ -76,13 +79,15 @@ public class PlayerController : MonoBehaviour {
             }
             else{
                 isJumping = false;
+                an.SetBool("isJumping", false);
             }
         }
 
         if(Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp("w"))
             {
-            isJumping = false;
-        }
+                isJumping = false;
+                an.SetBool("isJumping", false);
+            }
 
         }
 
